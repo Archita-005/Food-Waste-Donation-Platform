@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShareMeal | Food Waste Donation & Rescue Platform</title>
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Custom Styling -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-theme">
+
+  <!-- Toast Notification System -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area" id="nav-logo">
+        <div class="logo-icon">
+          <i data-lucide="heart-handshake"></i>
+        </div>
+        <span class="logo-text">Share<span>Meal</span></span>
+      </div>
+      
+      <!-- Nav Menu (Desktop) -->
+      <nav class="main-nav" id="main-nav">
+        <!-- Guest Links -->
+        <div class="guest-nav-links active-nav-group">
+          <a href="#about" class="nav-link active">About</a>
+          <a href="#listings-preview" class="nav-link">Active Rescues</a>
+          <button class="btn btn-outline" id="btn-login-trigger">Sign In</button>
+          <button class="btn btn-primary" id="btn-register-trigger">Register</button>
+        </div>
+
+        <!-- Authenticated Links -->
+        <div class="auth-nav-links hidden">
+          <a href="#dashboard" class="nav-link" id="nav-dashboard">Dashboard</a>
+          <a href="#browse" class="nav-link" id="nav-browse">Browse Food</a>
+          <a href="#my-activity" class="nav-link" id="nav-activity">My Activity</a>
+          <a href="#donate" class="nav-link donor-only" id="nav-donate">Donate Food</a>
+          
+          <div class="user-profile-menu">
+            <span class="user-avatar" id="header-avatar">U</span>
+            <div class="user-menu-dropdown">
+              <div class="dropdown-header">
+                <p class="user-dropdown-name" id="dropdown-name">User Name</p>
+                <span class="badge" id="dropdown-role">Donor</span>
+              </div>
+              <hr>
+              <button class="dropdown-item" id="btn-logout">
+                <i data-lucide="log-out"></i> Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Theme & Mobile Actions -->
+      <div class="header-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+          <i data-lucide="moon" class="theme-icon-dark"></i>
+          <i data-lucide="sun" class="theme-icon-light hidden"></i>
+        </button>
+        
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <div class="mobile-nav-drawer" id="mobile-nav-drawer">
+    <div class="drawer-header">
+      <span class="logo-text">Share<span>Meal</span></span>
+      <button class="close-drawer" id="close-drawer"><i data-lucide="x"></i></button>
+    </div>
+    <div class="drawer-body">
+      <!-- Links injected dynamically -->
+      <div id="mobile-drawer-links"></div>
+    </div>
+  </div>
+
+  <!-- Main Workspace -->
+  <main class="main-content">
+
+    <!-- ========================================== -->
+    <!-- LANDING VIEW (Guest Only) -->
+    <!-- ========================================== -->
+    <section id="view-landing" class="view-section active-view">
+      <div class="hero-section">
+        <div class="hero-container">
+          <div class="hero-content">
+            <span class="eco-badge"><i data-lucide="leaf"></i> Join the Zero Waste Movement</span>
+            <h1>Rescue Surplus Food, <br><span class="gradient-text">Feed Communities</span></h1>
+            <p>ShareMeal bridges the gap between surplus food donors (restaurants, caterers, grocers) and organizations in need. Donate excess meals or rescue food in real time.</p>
+            <div class="hero-buttons">
+              <button class="btn btn-primary btn-lg" id="btn-hero-donate">Donate Surplus Food</button>
+              <button class="btn btn-outline-alt btn-lg" id="btn-hero-claim">Rescue Available Food</button>
+            </div>
+            
+            <div class="hero-stats">
+              <div class="hero-stat-card">
+                <h3>1,200+</h3>
+                <p>Meals Rescued</p>
+              </div>
+              <div class="hero-stat-card">
+                <h3>540 kg</h3>
+                <p>CO2 Saved</p>
+              </div>
+              <div class="hero-stat-card">
+                <h3>15+</h3>
+                <p>NGO Partners</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="hero-image-wrapper">
+            <div class="hero-blob"></div>
+            <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=800&auto=format&fit=crop&q=80" alt="Fresh vegetable basket representing food preservation" class="hero-image">
+            <div class="hero-floating-card top-card">
+              <i data-lucide="clock" class="icon-orange"></i>
+              <div>
+                <strong>Active Rescues</strong>
+                <p>Fresh meals available now</p>
+              </div>
+            </div>
+            <div class="hero-floating-card bottom-card">
+              <i data-lucide="check-circle" class="icon-green"></i>
+              <div>
+                <strong>Easy Coordination</strong>
+                <p>Self-pickup, zero hassle</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="features-section" id="about">
+        <div class="section-title-wrapper">
+          <span class="sub-title">How It Works</span>
+          <h2>A Simple Solution to Food Waste</h2>
+          <p>We make it extremely easy to publish, track, and coordinate food handovers.</p>
+        </div>
+        
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon icon-bg-green">
+              <i data-lucide="plus-circle"></i>
+            </div>
+            <h3>1. List Surplus</h3>
+            <p>Donors quickly list food items, quantities, expiry window, and pickup coordinates.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon icon-bg-blue">
+              <i data-lucide="bell"></i>
+            </div>
+            <h3>2. Instant Alerts</h3>
+            <p>NGOs and charity networks receive lists and check real-time availability in their browser.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon icon-bg-orange">
+              <i data-lucide="truck"></i>
+            </div>
+            <h3>3. Rapid Pickup</h3>
+            <p>Recipients claim the food, instantly lock the listing, and collect it before expiry.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- AUTHENTICATION VIEW -->
+    <!-- ========================================== -->
+    <section id="view-auth" class="view-section hidden">
+      <div class="auth-wrapper">
+        <div class="auth-container">
+          
+          <!-- Tab Headers -->
+          <div class="auth-tabs">
+            <button class="auth-tab-btn active" id="tab-login">Sign In</button>
+            <button class="auth-tab-btn" id="tab-register">Register</button>
+          </div>
+
+          <!-- Sign In Form -->
+          <div class="auth-form-panel active" id="panel-login">
+            <form id="form-login">
+              <h2>Welcome Back</h2>
+              <p class="form-desc">Sign in to coordinate donations or browse available rescues.</p>
+              
+              <div class="form-group">
+                <label for="login-email">Email Address</label>
+                <div class="input-wrapper">
+                  <i data-lucide="mail"></i>
+                  <input type="email" id="login-email" required placeholder="name@organization.org">
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="login-password">Password</label>
+                <div class="input-wrapper">
+                  <i data-lucide="lock"></i>
+                  <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+              </div>
+              
+              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            </form>
+          </div>
+
+          <!-- Register Form -->
+          <div class="auth-form-panel" id="panel-register">
+            <form id="form-register">
+              <h2>Join ShareMeal</h2>
+              <p class="form-desc">Create your profile to start donating or claiming food.</p>
+              
+              <div class="form-group">
+                <label>Select User Type</label>
+                <div class="role-selector">
+                  <label class="role-option active">
+                    <input type="radio" name="register-role" value="donor" checked>
+                    <i data-lucide="store"></i>
+                    <span>Food Donor</span>
+                  </label>
+                  <label class="role-option">
+                    <input type="radio" name="register-role" value="recipient">
+                    <i data-lucide="heart"></i>
+                    <span>NGO / Recipient</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="register-name">Full Name</label>
+                <div class="input-wrapper">
+                  <i data-lucide="user"></i>
+                  <input type="text" id="register-name" required placeholder="John Doe">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="register-email">Email Address</label>
+                <div class="input-wrapper">
+                  <i data-lucide="mail"></i>
+                  <input type="email" id="register-email" required placeholder="john@example.com">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="register-phone">Phone Number</label>
+                <div class="input-wrapper">
+                  <i data-lucide="phone"></i>
+                  <input type="tel" id="register-phone" required placeholder="+1 (555) 000-0000">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="register-org" id="label-org">Business / Organization Name</label>
+                <div class="input-wrapper">
+                  <i data-lucide="building"></i>
+                  <input type="text" id="register-org" required placeholder="e.g. Green Palace Restaurant">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="register-password">Password</label>
+                <div class="input-wrapper">
+                  <i data-lucide="lock"></i>
+                  <input type="password" id="register-password" required minlength="6" placeholder="Min. 6 characters">
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- SYSTEM DASHBOARD (Authenticated) -->
+    <!-- ========================================== -->
+    <section id="view-dashboard" class="view-section hidden">
+      <div class="dashboard-header">
+        <div>
+          <h1 class="welcome-text">Hello, <span id="dashboard-username">User</span>!</h1>
+          <p class="welcome-desc">Here is your eco-impact and rescue activity overview.</p>
+        </div>
+        <div id="dashboard-action-btn">
+          <!-- Dynamically injected active CTA -->
+        </div>
+      </div>
+
+      <!-- Impact Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-icon icon-bg-green"><i data-lucide="gift"></i></div>
+          <div class="stat-content">
+            <h4 id="stat-total-donated">0</h4>
+            <p>Total Servings Donated</p>
+          </div>
+        </div>
+        
+        <div class="stat-box">
+          <div class="stat-icon icon-bg-blue"><i data-lucide="sparkles"></i></div>
+          <div class="stat-content">
+            <h4 id="stat-total-claimed">0</h4>
+            <p>Total Servings Claimed</p>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon icon-bg-teal"><i data-lucide="globe"></i></div>
+          <div class="stat-content">
+            <h4 id="stat-co2-saved">0 kg</h4>
+            <p>CO2 Landfill Saved</p>
+          </div>
+        </div>
+
+        <div class="stat-box">
+          <div class="stat-icon icon-bg-orange"><i data-lucide="users"></i></div>
+          <div class="stat-content">
+            <h4 id="stat-partners-count">0</h4>
+            <p>Registered Partners</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-body-grid">
+        <!-- Main Panel: Visualization / Analytics -->
+        <div class="dashboard-card main-panel-card">
+          <div class="card-header">
+            <h3>Eco Impact Progress</h3>
+            <span class="badge badge-success"><i data-lucide="trending-up"></i> Live Feed</span>
+          </div>
+          <div class="card-body progress-body">
+            <div class="progress-info">
+              <p>Every claimed meal prevents organic landfill waste, reducing methane and CO2 emission profiles by approximately <strong>0.45kg</strong> per meal.</p>
+            </div>
+            <!-- Custom Dynamic SVG Progress/Goal Chart -->
+            <div class="custom-chart-container">
+              <div class="progress-bar-gauge">
+                <svg class="gauge-svg" viewBox="0 0 100 100">
+                  <circle class="gauge-bg" cx="50" cy="50" r="40"></circle>
+                  <circle class="gauge-fill" id="gauge-fill-circle" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                </svg>
+                <div class="gauge-center">
+                  <span class="gauge-value" id="gauge-percentage">0%</span>
+                  <span class="gauge-label">Goal Target</span>
+                </div>
+              </div>
+              <div class="chart-legend-box">
+                <div class="legend-row">
+                  <span class="bullet bullet-claimed"></span>
+                  <div>
+                    <strong>Total Meals Claimed</strong>
+                    <p id="chart-legend-claimed">0 Servings</p>
+                  </div>
+                </div>
+                <div class="legend-row">
+                  <span class="bullet bullet-total"></span>
+                  <div>
+                    <strong>Goal Target</strong>
+                    <p>1,000 Servings</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Panel: Recent Feed Activity -->
+        <div class="dashboard-card sidebar-panel-card">
+          <div class="card-header">
+            <h3>Recent Claims Timeline</h3>
+          </div>
+          <div class="card-body timeline-body" id="timeline-claims">
+            <!-- Timeline items loaded dynamically -->
+            <div class="timeline-empty">No claims recorded yet. Be the first to claim food!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- BROWSE FOOD LISTINGS (Authenticated) -->
+    <!-- ========================================== -->
+    <section id="view-browse" class="view-section hidden">
+      <div class="view-header">
+        <h2>Available Food Rescues</h2>
+        <p>Real-time list of surplus food available for pickup. Claim files to coordinate.</p>
+      </div>
+
+      <!-- Filter Panel -->
+      <div class="filter-panel">
+        <div class="search-input-wrapper">
+          <i data-lucide="search"></i>
+          <input type="text" id="filter-search" placeholder="Search by title, donor, address...">
+        </div>
+        
+        <div class="filter-select-wrapper">
+          <label for="filter-category">Category:</label>
+          <select id="filter-category">
+            <option value="All">All Categories</option>
+            <option value="Cooked Food">Cooked Food</option>
+            <option value="Bakery">Bakery</option>
+            <option value="Fruits & Veg">Fruits & Veg</option>
+            <option value="Groceries">Groceries</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Listings Grid -->
+      <div class="listings-grid" id="listings-feed">
+        <!-- Spinner or skeleton placeholder loaded dynamically -->
+      </div>
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- MY ACTIVITY (Authenticated) -->
+    <!-- ========================================== -->
+    <section id="view-my-activity" class="view-section hidden">
+      <div class="view-header">
+        <h2>My Platform Activity</h2>
+        <p id="activity-subdesc">Manage your contributions or claimed food listings.</p>
+      </div>
+
+      <div class="activity-container">
+        <!-- Tables or Cards Container -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <h3 id="activity-table-title">Activity Log</h3>
+            <span class="badge badge-neutral" id="activity-count">0 items</span>
+          </div>
+          <div class="table-responsive">
+            <table class="activity-table">
+              <thead>
+                <tr id="activity-table-headers">
+                  <!-- Injected via JavaScript -->
+                </tr>
+              </thead>
+              <tbody id="activity-table-body">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+          <div id="activity-empty-state" class="empty-state hidden">
+            <i data-lucide="inbox"></i>
+            <p>No activity records found. Start listing or claiming food today!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ========================================== -->
+    <!-- DONATE FOOD FORM (Donors Only) -->
+    <!-- ========================================== -->
+    <section id="view-donate" class="view-section hidden donor-only">
+      <div class="form-container-card">
+        <div class="form-card-header">
+          <div class="icon-circle-bg"><i data-lucide="plus-circle"></i></div>
+          <div>
+            <h2>List New Surplus Food</h2>
+            <p>Fill out the form below to post available food. Local recipients will be notified.</p>
+          </div>
+        </div>
+
+        <form id="form-donate" class="donate-form">
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="donate-title">Food Title *</label>
+              <input type="text" id="donate-title" required placeholder="e.g. 10 Veggie Burgers & Fresh Salad">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="donate-description">Description *</label>
+              <textarea id="donate-description" required rows="4" placeholder="Mention item details, packaging status, dietary parameters (e.g. Vegetarian, contains nuts)..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="donate-servings">Servings Count *</label>
+              <div class="input-wrapper">
+                <i data-lucide="users"></i>
+                <input type="number" id="donate-servings" required min="1" placeholder="e.g. 15">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="donate-category">Category *</label>
+              <select id="donate-category" required>
+                <option value="" disabled selected>Select Category</option>
+                <option value="Cooked Food">Cooked Food</option>
+                <option value="Bakery">Bakery</option>
+                <option value="Fruits & Veg">Fruits & Veg</option>
+                <option value="Groceries">Groceries</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="donate-expiry">Expires In (Hours) *</label>
+              <div class="input-wrapper">
+                <i data-lucide="clock"></i>
+                <input type="number" id="donate-expiry" required min="0.5" step="0.5" placeholder="e.g. 4">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="donate-phone">Contact Phone for Pickup</label>
+              <div class="input-wrapper">
+                <i data-lucide="phone"></i>
+                <input type="tel" id="donate-phone" placeholder="Optional (defaults to profile phone)">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="donate-address">Pickup Address / Directions *</label>
+              <div class="input-wrapper">
+                <i data-lucide="map-pin"></i>
+                <input type="text" id="donate-address" required placeholder="e.g. Ground Floor Pantry, 78 Park Plaza">
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="donate-image">Custom Image URL (Optional)</label>
+              <div class="input-wrapper">
+                <i data-lucide="image"></i>
+                <input type="url" id="donate-image" placeholder="https://unsplash.com/... (Defaults based on category)">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" id="btn-cancel-donate">Cancel</button>
+            <button type="submit" class="btn btn-primary">Publish Listing</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Main Footer -->
+  <footer class="app-footer-bar">
+    <p>&copy; 2026 ShareMeal. Empowering partners, preventing landfill waste, feeding communities.</p>
+  </footer>
+
+  <!-- Script Import -->
+  <script src="app.js"></script>
+</body>
+</html>

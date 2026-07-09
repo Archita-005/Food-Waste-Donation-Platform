@@ -1,0 +1,22 @@
+[
+  {
+    "id": "470c70b6-e0ce-46b9-a664-cd4bf64b4749",
+    "name": "Hope NGO Rep",
+    "email": "hope@ngo.org",
+    "password": "$2a$10$cmfn/NG7zDv.ZO2O2Ju5QOSGok8n5K6XNF67GvdTkNLDmgFb26PuK",
+    "role": "recipient",
+    "phone": "+1 (555) 777-8888",
+    "organization": "Hope NGO Shelter",
+    "createdAt": "2026-07-07T04:49:03.347Z"
+  },
+  {
+    "id": "228f522a-81a0-4b0c-9ee9-5a9838a713de",
+    "name": "archita",
+    "email": "archuu@gmail.com",
+    "password": "$2a$10$CiPcs9Ss.h2ZJvE3qdKAxu5DiImW5kml3JSsCUH1hvAd05buvJo2e",
+    "role": "donor",
+    "phone": "+919855422559",
+    "organization": "HOTEL",
+    "createdAt": "2026-07-07T04:58:23.386Z"
+  }
+]
